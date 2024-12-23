@@ -54,6 +54,7 @@ const Tag: React.FC<TagProps> = ({ icon, label }) => (
 
 const style = StyleSheet.create({
     headerContainer: {
+        height: 130,
         backgroundColor: '#F9D8E3',
         padding: 15,
         borderRadius: 10,
@@ -89,8 +90,9 @@ const style = StyleSheet.create({
         color: '#80004C',
     },
     tagsContainer: {
+
         flexDirection: 'row',
-        marginTop: 10,
+        marginTop: 15,
         justifyContent: 'space-between',
     },
     tag: {

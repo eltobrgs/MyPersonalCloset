@@ -1,14 +1,16 @@
 import React from 'react';
 import { View, Text, Image, ScrollView } from 'react-native';
 import PreferenceItem from '../../components/PreferenceItem';
-import { style } from './styles';
-
+import CustomHeader from '../../components/Header'; // Importando o CustomHeader
 import profilepic from '../../assets/profilepic.png';
+import logo from '../../assets/logo.png'; // Adicione o logo caso não esteja importado
+import { style } from './styles';
 
 const UserProfile = () => {
   return (
-   
-
+    <View style={{ flex: 1, backgroundColor: '#FFF8FB' }}>
+      {/* Cabeçalho personalizado */}
+      <CustomHeader title="Perfil de Usuário" number="" imageSource={logo} />
 
       <ScrollView contentContainerStyle={style.container}>
         {/* Imagem de Perfil */}
@@ -33,7 +35,7 @@ const UserProfile = () => {
           <PreferenceItem label="Tema:" value="Claro" />
         </View>
       </ScrollView>
-    
+    </View>
   );
 };
 

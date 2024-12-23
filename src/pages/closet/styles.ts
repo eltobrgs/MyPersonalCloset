@@ -8,6 +8,9 @@ export const style = StyleSheet.create({
         padding: 20,
         backgroundColor: '#fff',
       },
+      content: {
+        flexGrow: 1,
+      },
     
     
 })
