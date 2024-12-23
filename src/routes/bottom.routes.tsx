@@ -1,6 +1,6 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Closet from '../pages/closet';
-import User from '../pages/user';
+import User from '../pages/UserProfile';
 import Ajustes from '../pages/ajustes';
 import CustomTabBar from '../components/CustomTabBar';
 import Home from '../pages/home';

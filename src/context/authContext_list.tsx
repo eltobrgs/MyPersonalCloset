@@ -1,7 +1,7 @@
-import React, { createContext, useContext, useRef, useEffect } from "react";
+import React, { createContext, useContext, useRef } from "react";
 import { Dimensions, Text, View, TouchableOpacity, StyleSheet, ScrollView } from "react-native";
 import { Modalize } from "react-native-modalize";
-import { AntDesign, MaterialIcons } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 
 export const authContextList = createContext<any>({});
 
@@ -13,21 +13,20 @@ export const AuthProvider_list = (props: any): any => {
     modalizeRef.current?.open();
   };
 
-  // Lista de exercícios
-  const _exerciseList = () => {
+  // Lista de looks
+  const _lookList = () => {
     return (
       <View style={styles.container}>
         <View style={styles.header}>
-          <Text style={styles.title}>Exercícios do Dia</Text>
+          <Text style={styles.title}>Looks do Dia</Text>
 
           {/* Botão de Fechar */}
           <View style={{ flexDirection: "row", gap: 10 }}>
             <TouchableOpacity onPress={() => modalizeRef.current?.close()}>
               <AntDesign name="closecircle" style={styles.closeIcon} />
-
             </TouchableOpacity>
 
-            {/* Botão de Adicionar Exercício */}
+            {/* Botão de Adicionar Look */}
             <TouchableOpacity>
               <AntDesign name="pluscircle" style={styles.addIcon} />
             </TouchableOpacity>
@@ -36,27 +35,27 @@ export const AuthProvider_list = (props: any): any => {
 
         <ScrollView style={styles.content}>
           <View style={styles.card}>
-            <Text style={styles.cardTitle}>Exercício 1: Flexões</Text>
+            <Text style={styles.cardTitle}>Look 1: Casual</Text>
             <Text style={styles.cardDescription}>
-              Complete 3 séries de 15 repetições. Lembre-se de manter a postura correta.
+              Camiseta branca, jeans azul, e tênis branco. Um visual perfeito para o dia a dia.
             </Text>
-            <Text style={styles.cardTime}>Tempo Sugerido: 10 min</Text>
+            <Text style={styles.cardTime}>Sugestão para: Dia ensolarado</Text>
           </View>
 
           <View style={styles.card}>
-            <Text style={styles.cardTitle}>Exercício 2: Abdominais</Text>
+            <Text style={styles.cardTitle}>Look 2: Elegante</Text>
             <Text style={styles.cardDescription}>
-              Faça 4 séries de 20 repetições, focando na respiração.
+              Camisa social azul, calça preta e sapatos sociais. Ideal para reuniões ou eventos formais.
             </Text>
-            <Text style={styles.cardTime}>Tempo Sugerido: 15 min</Text>
+            <Text style={styles.cardTime}>Sugestão para: Eventos formais</Text>
           </View>
 
           <View style={styles.card}>
-            <Text style={styles.cardTitle}>Exercício 3: Corrida</Text>
+            <Text style={styles.cardTitle}>Look 3: Esportivo</Text>
             <Text style={styles.cardDescription}>
-              Corra 2km na intensidade moderada, mantendo o ritmo constante.
+              Regata preta, shorts esportivo e tênis de corrida. Perfeito para treinos e atividades físicas.
             </Text>
-            <Text style={styles.cardTime}>Tempo Sugerido: 20 min</Text>
+            <Text style={styles.cardTime}>Sugestão para: Atividades ao ar livre</Text>
           </View>
         </ScrollView>
       </View>
@@ -74,7 +73,7 @@ export const AuthProvider_list = (props: any): any => {
         closeOnOverlayTap={false}
         panGestureEnabled={false}
       >
-        {_exerciseList()}
+        {_lookList()}
       </Modalize>
     </authContextList.Provider>
   );
