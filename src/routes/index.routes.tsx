@@ -7,7 +7,7 @@ export default function Routes() {
     const Stack = createStackNavigator();
     return (
         <Stack.Navigator
-            initialRouteName="Login" // Definindo a rota inicial, depois voce muda pra login
+            initialRouteName="BottonRoutes" // Definindo a rota inicial, depois voce muda pra login
             screenOptions={{
                 headerShown: false,
                 cardStyle: {
