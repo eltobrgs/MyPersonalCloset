@@ -20,6 +20,14 @@ const Home = () => {
         profilepic,
         profilepic,
         profilepic,
+        profilepic,
+        profilepic,
+        profilepic,
+        profilepic,
+        profilepic,
+        profilepic,
+        profilepic,
+        profilepic,
     ];
 
     return (

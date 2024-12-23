@@ -1,16 +1,17 @@
-import { StyleSheet,Dimensions} from "react-native";
-import { temas } from "../../global/temas";
-
+import { StyleSheet } from "react-native";
 
 export const style = StyleSheet.create({
-    container: {
-        flex: 1,
-        padding: 20,
-        backgroundColor: '#fff',
-      },
-      content: {
-        flexGrow: 1,
-      },
-    
-    
-})
+/* Estilo geral para a tela */
+geral: {
+  flex: 1,
+  backgroundColor: "#F2F2F2", /* Cor de fundo para a tela */
+},
+
+/* Estilos do scroll container */
+scrollContainer: {
+  flex: 1,
+  paddingTop: 20, /* Adiciona espaçamento superior para não sobrepor o header */
+},
+
+
+});
