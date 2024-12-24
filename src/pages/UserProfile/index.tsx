@@ -5,9 +5,12 @@ import CustomHeader from '../../components/Header';
 import profilepic from '../../assets/profilepic.png';
 import logo from '../../assets/logo.png'; // Adicione o logo caso não esteja importado
 import { style } from './styles';
+import { useAuth } from '../../context/authContext_list';
 
 const UserProfile = () => {
+   const {looks } = useAuth();
   return (
+    
     <View style={{ flex: 1, backgroundColor: '#FFF8FB' }}>
       {/* Cabeçalho personalizado */}
       <CustomHeader title="Perfil de Usuário" number="" imageSource={logo} />
@@ -23,7 +26,7 @@ const UserProfile = () => {
 
         {/* Contador */}
         <View style={style.counterContainer}>
-          <Text style={style.counterText}>23 LOOKS CADASTRADOS</Text>
+          <Text style={style.counterText}>{looks.length.toString()} LOOKS CADASTRADOS</Text>
         </View>
 
         {/* Preferências */}
