@@ -16,7 +16,7 @@ export const style = StyleSheet.create({
     color: temas.cores.primaria,
     marginBottom: 10,
     textAlign: 'center',
-    fontFamily: 'YourCustomFont', // Fonte personalizada, se necessário
+    fontFamily: temas.fontes, // Fonte personalizada, se necessário
   },
   boxMid: {
     backgroundColor: temas.cores.insideGray, // Cor de fundo para a seção
