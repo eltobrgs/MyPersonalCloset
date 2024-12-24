@@ -1,13 +1,12 @@
 import { Dimensions, StyleSheet } from "react-native";
 import { temas } from "../../global/temas";
 
-
 export const style = StyleSheet.create({
     container: {
         flexGrow: 1,
         alignItems: 'center',
         padding: 20,
-        backgroundColor: '#FFF',
+        backgroundColor: temas.cores.bgCard,
         width: '100%',
     },
     profileImage: {
@@ -20,15 +19,15 @@ export const style = StyleSheet.create({
     name: {
         fontSize: 20,
         fontWeight: 'bold',
-        color: '#4E2A33',
+        color: temas.cores.primaria,
     },
     subtitle: {
         fontSize: 16,
-        color: '#4E2A33',
+        color: temas.cores.primaria,
         marginBottom: 20,
     },
     counterContainer: {
-        backgroundColor: '#7A4B57',
+        backgroundColor: temas.cores.secundaria,
         borderRadius: 20,
         paddingVertical: 10,
         paddingHorizontal: 20,
@@ -39,7 +38,7 @@ export const style = StyleSheet.create({
         height: 80,
     },
     counterText: {
-        color: '#FFF',
+        color: temas.cores.bgCard,
         fontWeight: 'bold',
         fontSize: 24,
     },
@@ -50,7 +49,7 @@ export const style = StyleSheet.create({
     preferencesTitle: {
         fontSize: 30,
         fontWeight: 'bold',
-        color: '#4E2A33',
+        color: temas.cores.primaria,
         marginBottom: 10,
     },
 });

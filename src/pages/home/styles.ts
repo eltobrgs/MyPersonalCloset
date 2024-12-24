@@ -2,7 +2,6 @@ import { Dimensions, StyleSheet } from "react-native";
 import { temas } from "../../global/temas";
 
 export const style = StyleSheet.create({
-
     container: {
         flex: 1,
         backgroundColor: temas.cores.bgScreen,
@@ -14,13 +13,13 @@ export const style = StyleSheet.create({
     sectionTitle: {
         fontSize: 20,
         fontWeight: 'bold',
-        color: '#5A2B44',
+        color: temas.cores.primaria,
         marginBottom: 10,
         textAlign: 'center',
         fontFamily: 'YourCustomFont', // Adicione sua fonte personalizada
     },
     boxMid: {
-        backgroundColor: '#FEE6EF',
+        backgroundColor: temas.cores.insideGray,
         padding: 20,
         borderRadius: 15,
         marginTop: 20,
@@ -33,7 +32,7 @@ export const style = StyleSheet.create({
     imageContainer: {
         marginRight: 10,
         borderWidth: 2,
-        borderColor: '#D999B5',
+        borderColor: temas.cores.darkgray,
         borderRadius: 50,
         overflow: 'hidden',
         shadowColor: '#000',
@@ -46,7 +45,7 @@ export const style = StyleSheet.create({
         height: 70,
     },
     boxBottom: {
-        backgroundColor: '#FEE6EF',
+        backgroundColor: temas.cores.insideGray,
         padding: 20,
         borderRadius: 15,
         elevation: 5,
@@ -65,7 +64,7 @@ export const style = StyleSheet.create({
     boxBottomItem: {
         width: '48%',
         height: 120,
-        backgroundColor: '#D999B5',
+        backgroundColor: temas.cores.darkgray,
         borderRadius: 10,
         marginBottom: 15,
         elevation: 3,
@@ -83,6 +82,4 @@ export const style = StyleSheet.create({
         textAlign: 'center',
         fontFamily: 'YourCustomFont', // Adicione sua fonte personalizada
     },
-
-    
-}); 
+});

@@ -1,9 +1,10 @@
 import { StyleSheet } from "react-native";
+import { temas } from "../../global/temas";
 
 export const style = StyleSheet.create({
   geral: {
     flex: 1,
-    backgroundColor: "#F8F8F8",
+    backgroundColor: temas.cores.bgScreen,
   },
 
   scrollContainer: {
@@ -12,7 +13,7 @@ export const style = StyleSheet.create({
   },
 
   itemContainer: {
-    backgroundColor: "#FFFFFF",
+    backgroundColor: temas.cores.bgCard,
     borderRadius: 10,
     padding: 15,
     marginBottom: 15,
@@ -29,13 +30,13 @@ export const style = StyleSheet.create({
   itemTitle: {
     fontSize: 16,
     fontWeight: "bold",
-    color: "#333333",
+    color: temas.cores.primaria,
     marginBottom: 5,
   },
 
   itemDescription: {
     fontSize: 14,
-    color: "#666666",
+    color: temas.cores.secundaria,
   },
 
   floatingButton: {
@@ -45,7 +46,7 @@ export const style = StyleSheet.create({
     width: 60,
     height: 60,
     borderRadius: 30,
-    backgroundColor: "#E63946",
+    backgroundColor: temas.cores.primaria,
     alignItems: "center",
     justifyContent: "center",
     shadowColor: "#000",
@@ -61,6 +62,6 @@ export const style = StyleSheet.create({
   floatingButtonText: {
     fontSize: 28,
     fontWeight: "bold",
-    color: "#FFFFFF",
+    color: temas.cores.bgCard,
   },
 });

@@ -1,9 +1,10 @@
 import { StyleSheet } from "react-native";
+import { temas } from "../../global/temas";
 
 export const style = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F2F2F2', // Cor de fundo para a tela
+    backgroundColor: temas.cores.bgScreen, // Cor de fundo para a tela
   },
   content: {
     padding: 20,
@@ -12,13 +13,13 @@ export const style = StyleSheet.create({
   sectionTitle: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#5A2B44',
+    color: temas.cores.primaria,
     marginBottom: 10,
     textAlign: 'center',
     fontFamily: 'YourCustomFont', // Fonte personalizada, se necessário
   },
   boxMid: {
-    backgroundColor: '#FEE6EF', // Cor de fundo para a seção
+    backgroundColor: temas.cores.insideGray, // Cor de fundo para a seção
     padding: 20,
     borderRadius: 15,
     marginTop: 20,
@@ -29,7 +30,7 @@ export const style = StyleSheet.create({
     shadowRadius: 5,
   },
   boxBottom: {
-    backgroundColor: '#FEE6EF', // Cor de fundo para a seção
+    backgroundColor: temas.cores.insideGray, // Cor de fundo para a seção
     padding: 20,
     borderRadius: 15,
     marginTop: 30,
@@ -48,7 +49,7 @@ export const style = StyleSheet.create({
   boxBottomItem: {
     width: '48%',
     height: 120,
-    backgroundColor: '#D999B5',
+    backgroundColor: temas.cores.lightgray,
     borderRadius: 10,
     marginBottom: 15,
     elevation: 3, // Sombra

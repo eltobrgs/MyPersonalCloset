@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Image, ScrollView } from 'react-native';
 import PreferenceItem from '../../components/PreferenceItem';
-import CustomHeader from '../../components/Header'; // Importando o CustomHeader
+import CustomHeader from '../../components/Header'; 
 import profilepic from '../../assets/profilepic.png';
 import logo from '../../assets/logo.png'; // Adicione o logo caso não esteja importado
 import { style } from './styles';

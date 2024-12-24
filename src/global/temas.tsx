@@ -10,4 +10,10 @@ export const temas = {
         bgCard: '#FFFFFF', // branco
         
     }
+
+    // fontes: {
+    //     // Adicione as fontes  aqui
+    // }
+
+    
 };
