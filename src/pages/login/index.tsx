@@ -8,7 +8,7 @@ import { Input } from "../../components/Input";
 import { Button } from "../../components/button";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 import { renderVaribale } from "../../global/variables";
-// import AsyncStorage from "@react-native-async- storage/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 export default function Login() {
@@ -21,58 +21,58 @@ export default function Login() {
     const [loading, setLoading] = React.useState(false);
 
     // Função simulada para login
-    // async function getLogin() {
-    //     console.log("Início da função getLogin");
+    async function getLogin() {
+        console.log("Início da função getLogin");
     
-    //     if (!email || !password) {
-    //         console.log("Erro: Campos obrigatórios não preenchidos");
-    //         alert("Preencha todos os campos");
-    //         return;
-    //     }
+        if (!email || !password) {
+            console.log("Erro: Campos obrigatórios não preenchidos");
+            alert("Preencha todos os campos");
+            return;
+        }
     
-    //     try {
-    //         console.log("Preparando para enviar os dados ao servidor");
-    //         setLoading(true);
+        try {
+            console.log("Preparando para enviar os dados ao servidor");
+            setLoading(true);
     
-    //         console.log("Dados sendo enviados:", { email, password });
+            console.log("Dados sendo enviados:", { email, password });
     
-    //         const response = await fetch(`${renderVaribale}/login`, {
-    //             method: "POST",
-    //             headers: {
-    //                 "Content-Type": "application/json",
-    //             },
-    //             body: JSON.stringify({ email, password }),
-    //         });
+            const response = await fetch(`${renderVaribale}/login`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ email, password }),
+            });
     
-    //         console.log("Resposta do servidor recebida:", response);
+            console.log("Resposta do servidor recebida:", response);
     
-    //         const result = await response.json();
-    //         console.log("Dados processados da resposta:", result);
+            const result = await response.json();
+            console.log("Dados processados da resposta:", result);
     
-    //         if (response.status === 200) {
-    //             console.log("Login bem-sucedido");
-    //             alert("Login bem-sucedido!");
+            if (response.status === 200) {
+                console.log("Login bem-sucedido");
+                alert("Login bem-sucedido!");
                 
-    //             // Se usar armazenamento local descomentado, logue o que será salvo
-    //             // console.log("Token sendo armazenado:", result.token);
-    //             // await AsyncStorage.setItem('userToken', result.token);
+                // Se usar armazenamento local descomentado, logue o que será salvo
+                console.log("Token sendo armazenado:", result.token);
+                await AsyncStorage.setItem('userToken', result.token);
     
-    //             navigation.reset({
-    //                 index: 0,
-    //                 routes: [{ name: "BottonRoutes" }],
-    //             });
-    //         } else {
-    //             console.log("Erro no login, status diferente de 200:", result.error);
-    //             alert(`Erro no login: ${result.error}`);
-    //         }
-    //     } catch (error) {
-    //         console.error("Erro ao fazer login:", error);
-    //         alert("Erro ao se conectar com o servidor.");
-    //     } finally {
-    //         console.log("Finalizando execução da função getLogin");
-    //         setLoading(false);
-    //     }
-    // }
+                navigation.reset({
+                    index: 0,
+                    routes: [{ name: "BottonRoutes" }],
+                });
+            } else {
+                console.log("Erro no login, status diferente de 200:", result.error);
+                alert(`Erro no login: ${result.error}`);
+            }
+        } catch (error) {
+            console.error("Erro ao fazer login:", error);
+            alert("Erro ao se conectar com o servidor.");
+        } finally {
+            console.log("Finalizando execução da função getLogin");
+            setLoading(false);
+        }
+    }
     
     // Redireciona para a tela de cadastro
     async function redirectRegister() {
@@ -88,14 +88,7 @@ export default function Login() {
     
         console.log("Finalizando a execução da função redirectRegister");
     }
-    async function getLogin() {
-    navigation.reset({
-        index: 0,
-        routes: [{ name: "BottonRoutes" }],
-    });
-}
     
-
     return (
         <View style={style.container}>
             <View style={style.boxTop}>
@@ -142,3 +135,4 @@ export default function Login() {
         </View>
     );
 }
+
