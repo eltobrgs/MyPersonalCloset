@@ -1,57 +1,51 @@
 import { StyleSheet } from "react-native";
 
 export const style = StyleSheet.create({
-  /* Estilo geral para a tela */
   geral: {
     flex: 1,
-    backgroundColor: "#F8F8F8", // Fundo neutro claro
+    backgroundColor: "#F8F8F8",
   },
 
-  /* Estilos do container de rolagem */
   scrollContainer: {
     flex: 1,
-    padding: 20, // Espaçamento interno para o conteúdo
+    padding: 20,
   },
 
-  /* Estilo para cada item do Closet */
   itemContainer: {
-    backgroundColor: "#FFFFFF", // Fundo branco
-    borderRadius: 10, // Bordas arredondadas
-    padding: 15, // Espaçamento interno
-    marginBottom: 15, // Espaçamento entre itens
-    shadowColor: "#000", // Sombra para destaque
+    backgroundColor: "#FFFFFF",
+    borderRadius: 10,
+    padding: 15,
+    marginBottom: 15,
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 2,
     },
     shadowOpacity: 0.1,
     shadowRadius: 4,
-    elevation: 3, // Sombra em dispositivos Android
+    elevation: 3,
   },
 
-  /* Estilo para o título do item */
   itemTitle: {
     fontSize: 16,
     fontWeight: "bold",
     color: "#333333",
-    marginBottom: 5, // Espaçamento entre título e descrição
+    marginBottom: 5,
   },
 
-  /* Estilo para a descrição do item */
   itemDescription: {
     fontSize: 14,
     color: "#666666",
   },
 
-  /* Botão flutuante para adicionar novos looks */
   floatingButton: {
     position: "absolute",
-    bottom: 20, // Distância da parte inferior da tela
-    right: 20, // Distância da lateral direita da tela
-    width: 60, // Largura do botão
-    height: 60, // Altura do botão
-    borderRadius: 30, // Botão circular
-    backgroundColor: "#E63946", // Cor vermelha para destaque
+    bottom: 20,
+    right: 20,
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    backgroundColor: "#E63946",
     alignItems: "center",
     justifyContent: "center",
     shadowColor: "#000",
@@ -61,14 +55,12 @@ export const style = StyleSheet.create({
     },
     shadowOpacity: 0.3,
     shadowRadius: 4,
-    elevation: 5, // Sombra para Android
+    elevation: 5,
   },
 
-  /* Estilo do texto do botão flutuante */
   floatingButtonText: {
-    fontSize: 28, // Texto grande
+    fontSize: 28,
     fontWeight: "bold",
-    color: "#FFFFFF", // Cor do texto branco
-    
+    color: "#FFFFFF",
   },
 });
