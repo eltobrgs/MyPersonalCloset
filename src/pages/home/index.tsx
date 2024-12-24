@@ -5,6 +5,7 @@ import CustomHeader from '../../components/Header';
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 import profilepic from '../../assets/profilepic.png';
 import logo from '../../assets/logo.png';
+import { style } from './styles';
 const Home = () => {
     const handleProfilePress = () => {
         const navigation = useNavigation<NavigationProp<any>>();
@@ -31,11 +32,11 @@ const Home = () => {
     ];
 
     return (
-        <View style={styles.container}>
+        <View style={style.container}>
             {/* Custom Header */}
             <CustomHeader title="My Personal Closet" number={''} imageSource={logo} />
 
-            <ScrollView contentContainerStyle={styles.content}>
+            <ScrollView contentContainerStyle={style.content}>
                 {/* Profile Header */}
                 <ProfileHeader
                     name="Paloma Sousa"
@@ -46,14 +47,14 @@ const Home = () => {
                 />
 
                 {/* Seção Looks em Alta */}
-                <View style={styles.boxMid}>
-                    <Text style={styles.sectionTitle}>Looks em Alta</Text>
+                <View style={style.boxMid}>
+                    <Text style={style.sectionTitle}>Looks em Alta</Text>
                     <FlatList
                         data={images}
                         horizontal
                         renderItem={({ item }) => (
-                            <TouchableOpacity style={styles.imageContainer}>
-                                <Image source={item} style={styles.image} />
+                            <TouchableOpacity style={style.imageContainer}>
+                                <Image source={item} style={style.image} />
                             </TouchableOpacity>
                         )}
                         keyExtractor={(item, index) => index.toString()}
@@ -62,20 +63,20 @@ const Home = () => {
                 </View>
 
                 {/* Seção Opções */}
-                <View style={styles.boxBottom}>
-                    <Text style={styles.sectionTitle}>Explore Mais</Text>
-                    <View style={styles.optionsGrid}>
-                        <TouchableOpacity style={styles.boxBottomItem}>
-                            <Text style={styles.optionText}>Looks</Text>
+                <View style={style.boxBottom}>
+                    <Text style={style.sectionTitle}>Dicas de Looks</Text>
+                    <View style={style.optionsGrid}>
+                        <TouchableOpacity style={style.boxBottomItem}>
+                            <Text style={style.optionText}>Looks</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.boxBottomItem}>
-                            <Text style={styles.optionText}>Favoritos</Text>
+                        <TouchableOpacity style={style.boxBottomItem}>
+                            <Text style={style.optionText}>Favoritos</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.boxBottomItem}>
-                            <Text style={styles.optionText}>Estilistas</Text>
+                        <TouchableOpacity style={style.boxBottomItem}>
+                            <Text style={style.optionText}>Estilistas</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.boxBottomItem}>
-                            <Text style={styles.optionText}>Configurações</Text>
+                        <TouchableOpacity style={style.boxBottomItem}>
+                            <Text style={style.optionText}>Configurações</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -84,88 +85,6 @@ const Home = () => {
     );
 };
 
-import { temas } from '../../global/temas';
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: temas.cores.bgScreen,
-    },
-    content: {
-        padding: 20,
-        flexGrow: 1,
-    },
-    sectionTitle: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        color: '#5A2B44',
-        marginBottom: 10,
-        textAlign: 'center',
-        fontFamily: 'YourCustomFont', // Adicione sua fonte personalizada
-    },
-    boxMid: {
-        backgroundColor: '#FEE6EF',
-        padding: 20,
-        borderRadius: 15,
-        marginTop: 20,
-        elevation: 5,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.2,
-        shadowRadius: 5,
-    },
-    imageContainer: {
-        marginRight: 10,
-        borderWidth: 2,
-        borderColor: '#D999B5',
-        borderRadius: 50,
-        overflow: 'hidden',
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.15,
-        shadowRadius: 3,
-    },
-    image: {
-        width: 70,
-        height: 70,
-    },
-    boxBottom: {
-        backgroundColor: '#FEE6EF',
-        padding: 20,
-        borderRadius: 15,
-        elevation: 5,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.2,
-        shadowRadius: 5,
-        marginTop: 30,
-    },
-    optionsGrid: {
-        marginTop: 20,
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        justifyContent: 'space-between',
-    },
-    boxBottomItem: {
-        width: '48%',
-        height: 120,
-        backgroundColor: '#D999B5',
-        borderRadius: 10,
-        marginBottom: 15,
-        elevation: 3,
-        alignItems: 'center',
-        justifyContent: 'center',
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.15,
-        shadowRadius: 3,
-    },
-    optionText: {
-        color: '#FFF',
-        fontSize: 16,
-        fontWeight: 'bold',
-        textAlign: 'center',
-        fontFamily: 'YourCustomFont', // Adicione sua fonte personalizada
-    },
-});
+
 
 export default Home;

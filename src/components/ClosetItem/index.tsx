@@ -1,8 +1,6 @@
-import React from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
-import { style } from './styles';
-
-
+import React from "react";
+import { View, Text, Image, TouchableOpacity } from "react-native";
+import { style } from "./styles";
 
 interface ClosetItemProps {
   image: any;
@@ -25,7 +23,5 @@ const ClosetItem: React.FC<ClosetItemProps> = ({ image, title, description, onPr
     </TouchableOpacity>
   );
 };
-
-
 
 export default ClosetItem;

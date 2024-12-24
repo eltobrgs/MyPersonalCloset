@@ -1,78 +1,111 @@
-import React, { createContext, useContext, useRef } from "react";
-import { Dimensions, Text, View, TouchableOpacity, StyleSheet, ScrollView } from "react-native";
+import React, { createContext, useContext, useRef, useState } from "react";
+import {
+  Alert,
+  Text,
+  View,
+  TouchableOpacity,
+  StyleSheet,
+  ScrollView,
+  Image,
+} from "react-native";
 import { Modalize } from "react-native-modalize";
 import { AntDesign } from "@expo/vector-icons";
+import * as ImagePicker from "expo-image-picker"; // Biblioteca para seleção de imagens
+import { Input } from "../components/Input";
+import { temas } from "../global/temas";
 
 export const authContextList = createContext<any>({});
 
 export const AuthProvider_list = (props: any): any => {
   const modalizeRef = useRef<Modalize>(null);
+  const [looks, setLooks] = useState<any[]>([]);
+  const [newLook, setNewLook] = useState({
+    title: "",
+    description: "",
+    photo: null as string | null, // Campo para armazenar a foto
+  });
 
-  // Função para abrir o modal
   const onOpen = () => {
     modalizeRef.current?.open();
   };
 
-  // Lista de looks
-  const _lookList = () => {
-    return (
-      <View style={styles.container}>
-        <View style={styles.header}>
-          <Text style={styles.title}>Looks do Dia</Text>
-
-          {/* Botão de Fechar */}
-          <View style={{ flexDirection: "row", gap: 10 }}>
-            <TouchableOpacity onPress={() => modalizeRef.current?.close()}>
-              <AntDesign name="closecircle" style={styles.closeIcon} />
-            </TouchableOpacity>
-
-            {/* Botão de Adicionar Look */}
-            <TouchableOpacity>
-              <AntDesign name="pluscircle" style={styles.addIcon} />
-            </TouchableOpacity>
-          </View>
-        </View>
-
-        <ScrollView style={styles.content}>
-          <View style={styles.card}>
-            <Text style={styles.cardTitle}>Look 1: Casual</Text>
-            <Text style={styles.cardDescription}>
-              Camiseta branca, jeans azul, e tênis branco. Um visual perfeito para o dia a dia.
-            </Text>
-            <Text style={styles.cardTime}>Sugestão para: Dia ensolarado</Text>
-          </View>
-
-          <View style={styles.card}>
-            <Text style={styles.cardTitle}>Look 2: Elegante</Text>
-            <Text style={styles.cardDescription}>
-              Camisa social azul, calça preta e sapatos sociais. Ideal para reuniões ou eventos formais.
-            </Text>
-            <Text style={styles.cardTime}>Sugestão para: Eventos formais</Text>
-          </View>
-
-          <View style={styles.card}>
-            <Text style={styles.cardTitle}>Look 3: Esportivo</Text>
-            <Text style={styles.cardDescription}>
-              Regata preta, shorts esportivo e tênis de corrida. Perfeito para treinos e atividades físicas.
-            </Text>
-            <Text style={styles.cardTime}>Sugestão para: Atividades ao ar livre</Text>
-          </View>
-        </ScrollView>
-      </View>
-    );
+  const addLook = () => {
+    if (!newLook.title || !newLook.description) {
+      Alert.alert("Erro", "Preencha todos os campos antes de adicionar um look.");
+      return;
+    }
+    setLooks([...looks, newLook]);
+    setNewLook({ title: "", description: "", photo: null });
+    modalizeRef.current?.close();
   };
 
+  const selectImage = async () => {
+    const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (!permissionResult.granted) {
+      Alert.alert("Erro", "Permissão para acessar a galeria é necessária!");
+      return;
+    }
+    const pickerResult = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+    });
+    if (!pickerResult.canceled) {
+      setNewLook({ ...newLook, photo: pickerResult.assets[0].uri });
+    }
+  };
+
+  const _lookList = () => (
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <Text style={styles.title}>Looks do Dia</Text>
+        <TouchableOpacity onPress={() => modalizeRef.current?.close()}>
+          <AntDesign name="closecircle" style={styles.closeIcon} />
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.inputContainer}>
+        <Input
+          title="Título"
+          value={newLook.title}
+          onChangeText={(text) => setNewLook({ ...newLook, title: text })}
+          IconLeft={AntDesign}
+          iconLeftName="edit"
+        />
+        <Input
+          title="Descrição"
+          value={newLook.description}
+          onChangeText={(text) => setNewLook({ ...newLook, description: text })}
+          IconLeft={AntDesign}
+          iconLeftName="filetext1"
+        />
+        {newLook.photo && (
+          <Image source={{ uri: newLook.photo }} style={styles.imagePreview} />
+        )}
+        <TouchableOpacity onPress={selectImage} style={styles.imageButton}>
+          <Text style={styles.imageButtonText}>
+            {newLook.photo ? "Trocar Foto" : "Adicionar Foto"}
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={addLook} style={styles.addButton}>
+          <Text style={styles.addButtonText}>Adicionar Look</Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* <ScrollView style={styles.content}>
+        {looks.map((look, index) => (
+          <View key={index} style={styles.card}>
+            {look.photo && <Image source={{ uri: look.photo }} style={styles.cardImage} />}
+            <Text style={styles.cardTitle}>{look.title}</Text>
+            <Text style={styles.cardDescription}>{look.description}</Text>
+          </View>
+        ))}
+      </ScrollView> */}
+    </View>
+  );
+
   return (
-    <authContextList.Provider value={{ onOpen }}>
+    <authContextList.Provider value={{ onOpen, looks }}>
       {props.children}
-      <Modalize
-        ref={modalizeRef}
-        adjustToContentHeight={true}
-        disableScrollIfPossible={false}
-        onOverlayPress={() => { }}
-        closeOnOverlayTap={false}
-        panGestureEnabled={false}
-      >
+      <Modalize ref={modalizeRef} adjustToContentHeight={true}>
         {_lookList()}
       </Modalize>
     </authContextList.Provider>
@@ -84,7 +117,7 @@ export const useAuth = () => useContext(authContextList);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F5F5F5",
+    backgroundColor: temas.cores.bgScreen,
     padding: 20,
   },
   header: {
@@ -96,21 +129,31 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: "bold",
-    color: "#333",
-  },
-  addIcon: {
-    fontSize: 28,
-    color: "#4CAF50",
+    color: temas.cores.primaria,
   },
   closeIcon: {
     fontSize: 28,
-    color: "#F44336", // Vermelho para indicar fechar
+    color: temas.cores.secundaria,
+  },
+  inputContainer: {
+    marginBottom: 20,
+  },
+  addButton: {
+    backgroundColor: temas.cores.primaria,
+    padding: 10,
+    borderRadius: 5,
+    alignItems: "center",
+    marginTop: 10,
+  },
+  addButtonText: {
+    color: temas.cores.bgCard,
+    fontWeight: "bold",
   },
   content: {
     flex: 1,
   },
   card: {
-    backgroundColor: "#FFF",
+    backgroundColor: temas.cores.bgCard,
     padding: 20,
     marginBottom: 15,
     borderRadius: 8,
@@ -123,17 +166,32 @@ const styles = StyleSheet.create({
   cardTitle: {
     fontSize: 18,
     fontWeight: "bold",
-    color: "#222",
-    marginBottom: 10,
+    color: temas.cores.secundaria,
   },
   cardDescription: {
     fontSize: 14,
-    color: "#555",
-    marginBottom: 10,
+    color: temas.cores.gray,
   },
-  cardTime: {
-    fontSize: 12,
-    color: "#999",
-    fontStyle: "italic",
+  cardImage: {
+    width: "100%",
+    height: 200,
+    marginBottom: 10,
+    borderRadius: 8,
+  },
+  imagePreview: {
+    width: "100%",
+    height: 200,
+    marginBottom: 10,
+    borderRadius: 8,
+  },
+  imageButton: {
+    backgroundColor: "#A9A9A9",
+    padding: 10,
+    borderRadius: 5,
+    alignItems: "center",
+  },
+  imageButtonText: {
+    color: "#FFF",
+    fontWeight: "bold",
   },
 });
