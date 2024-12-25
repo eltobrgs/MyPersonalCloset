@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import profilepic from '../../assets/profilepic.png';
+import { useNavigation, NavigationProp } from "@react-navigation/native";
 
 interface ProfileHeaderProps {
     subtitle: string;
@@ -12,6 +13,7 @@ interface ProfileHeaderProps {
 
 const ProfileHeader: React.FC<ProfileHeaderProps> = ({ subtitle, gender, location, onPress }) => {
     const [name, setName] = useState<string>("Carregando...");
+    const navigation = useNavigation<NavigationProp<any>>();
 
     useEffect(() => {
         const fetchName = async () => {
@@ -21,6 +23,9 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ subtitle, gender, locatio
         fetchName();
     }, []);
 
+    async function redirectProfile() {
+        navigation.navigate("User");
+    }
     return (
         <View style={style.headerContainer}>
             {/* Imagem e Nome */}
@@ -34,7 +39,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ subtitle, gender, locatio
                     <Text style={style.subtitle}>{subtitle}</Text>
                 </View>
                 <TouchableOpacity onPress={onPress}>
-                    <Text style={style.arrow}>&gt;</Text>
+                    <Text onPress={redirectProfile} style={style.arrow}>&gt;</Text>
                 </TouchableOpacity>
             </View>
 
