@@ -51,7 +51,7 @@ const UserProfile = () => {
 
     return (
         <View style={{ flex: 1, backgroundColor: '#FFF8FB' }}>
-            <CustomHeader title="Perfil de Usuário" number="" imageSource={logo} />
+            <CustomHeader title="Perfil de Usuário" imageSource={logo} number={''} />
 
             <ScrollView contentContainerStyle={style.container}>
                 <Image
