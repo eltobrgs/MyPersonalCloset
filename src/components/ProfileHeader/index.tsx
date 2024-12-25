@@ -6,6 +6,7 @@ import profilepic from '../../assets/profilepic.png';
 import { renderVaribale } from '../../global/variables';
 
 interface ProfileHeaderProps {
+    name: string;
     subtitle: string;
     gender: string;
     location: string;
