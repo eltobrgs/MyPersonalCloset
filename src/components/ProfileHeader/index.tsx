@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { View, Text, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { StyleSheet } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage'; // Para obter o token armazenado
 import profilepic from '../../assets/profilepic.png';
-import { useNavigation, NavigationProp } from "@react-navigation/native";
+import { renderVaribale } from '../../global/variables';
 
 interface ProfileHeaderProps {
     subtitle: string;
@@ -12,34 +13,53 @@ interface ProfileHeaderProps {
 }
 
 const ProfileHeader: React.FC<ProfileHeaderProps> = ({ subtitle, gender, location, onPress }) => {
-    const [name, setName] = useState<string>("Carregando...");
-    const navigation = useNavigation<NavigationProp<any>>();
+    const [name, setName] = useState<string>('Carregando...');
+    const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
-        const fetchName = async () => {
-            const storedName = await AsyncStorage.getItem("@user_name");
-            setName(storedName || "Usuário");
+        const fetchUserData = async () => {
+            try {
+                const token = await AsyncStorage.getItem("userToken"); // Garantir que o token seja o mesmo que o da tela UserProfile
+                if (!token) throw new Error("Token não encontrado");
+
+                const response = await fetch(`${renderVaribale}/me`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+
+                if (!response.ok) {
+                    throw new Error("Erro ao buscar dados do usuário");
+                }
+
+                const userData = await response.json();
+                setName(userData.name || "Usuário"); 
+            } catch (error) {
+                console.error(error);
+                setName("Usuário"); 
+            } finally {
+                setLoading(false);
+            }
         };
-        fetchName();
+
+        fetchUserData();
     }, []);
 
-    async function redirectProfile() {
-        navigation.navigate("User");
+    if (loading) {
+        return <ActivityIndicator size="large" color="#80004C" />;
     }
+
     return (
         <View style={style.headerContainer}>
             {/* Imagem e Nome */}
             <View style={style.infoContainer}>
-                <Image
-                    source={profilepic}
-                    style={style.profileImage}
-                />
+                <Image source={profilepic} style={style.profileImage} />
                 <View style={style.textContainer}>
-                    <Text style={style.name}>{name}</Text> {/* Nome obtido do AsyncStorage */}
+                    <Text style={style.name}>{name}</Text>
                     <Text style={style.subtitle}>{subtitle}</Text>
                 </View>
                 <TouchableOpacity onPress={onPress}>
-                    <Text onPress={redirectProfile} style={style.arrow}>&gt;</Text>
+                    <Text style={style.arrow}>&gt;</Text>
                 </TouchableOpacity>
             </View>
 
@@ -59,7 +79,7 @@ interface TagProps {
 
 const Tag: React.FC<TagProps> = ({ icon, label }) => (
     <View style={style.tag}>
-        <Text style={style.icon}>{icon === 'gender' ? '👩‍🦰' : '📍'}</Text>
+        <Text style={style.icon}>{icon === 'gender' ? '👩‍🦰' : ''}</Text>
         <Text style={style.tagLabel}>{label}</Text>
     </View>
 );
