@@ -1,17 +1,26 @@
-import React from 'react';
-import { View, Text, Image, TouchableOpacity } from 'react-native';
-import { StyleSheet } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import profilepic from '../../assets/profilepic.png';
 
 interface ProfileHeaderProps {
-    name: string;
     subtitle: string;
     gender: string;
     location: string;
     onPress: () => void;
 }
 
-const ProfileHeader: React.FC<ProfileHeaderProps> = ({ name, subtitle, gender, location, onPress }) => {
+const ProfileHeader: React.FC<ProfileHeaderProps> = ({ subtitle, gender, location, onPress }) => {
+    const [name, setName] = useState<string>("Carregando...");
+
+    useEffect(() => {
+        const fetchName = async () => {
+            const storedName = await AsyncStorage.getItem("@user_name");
+            setName(storedName || "Usuário");
+        };
+        fetchName();
+    }, []);
+
     return (
         <View style={style.headerContainer}>
             {/* Imagem e Nome */}
@@ -21,7 +30,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ name, subtitle, gender, l
                     style={style.profileImage}
                 />
                 <View style={style.textContainer}>
-                    <Text style={style.name}>{name}</Text>
+                    <Text style={style.name}>{name}</Text> {/* Nome obtido do AsyncStorage */}
                     <Text style={style.subtitle}>{subtitle}</Text>
                 </View>
                 <TouchableOpacity onPress={onPress}>
@@ -45,12 +54,10 @@ interface TagProps {
 
 const Tag: React.FC<TagProps> = ({ icon, label }) => (
     <View style={style.tag}>
-        <Text style={style.icon}>{icon === 'gender' ? '👩‍🦰' : ''}</Text>
+        <Text style={style.icon}>{icon === 'gender' ? '👩‍🦰' : '📍'}</Text>
         <Text style={style.tagLabel}>{label}</Text>
     </View>
 );
-
-
 
 const style = StyleSheet.create({
     headerContainer: {
@@ -90,7 +97,6 @@ const style = StyleSheet.create({
         color: '#80004C',
     },
     tagsContainer: {
-
         flexDirection: 'row',
         marginTop: 15,
         justifyContent: 'space-between',

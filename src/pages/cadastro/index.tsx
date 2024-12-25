@@ -7,43 +7,21 @@ import { temas } from "../../global/temas";
 import { Input } from "../../components/Input";
 import { Button } from "../../components/button";
 import { renderVaribale } from "../../global/variables";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 
 export default function Cadastro() {
-
     const navigation = useNavigation<NavigationProp<any>>();
     const [name, setName] = React.useState("");
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
     const [showPassword, setShowPassword] = React.useState(true);
-    // const [confirmpassword, setconfirmPassword] = React.useState("");
     const [loading, setLoading] = React.useState(false);
 
     async function registerUser() {
-        console.log("Início da função registerUser");
-    
-        // if (!email || !password || !confirmpassword) {
-        //     console.log("Erro: Campos obrigatórios não preenchidos");
-        //     alert("Preencha todos os campos");
-        //     return;
-        // }
-    
-        // if (password !== confirmpassword) {
-        //     console.log("Erro: Senhas não coincidem");
-        //     alert("As senhas não coincidem");
-        //     return;
-        // }
-    
         try {
-            console.log("Preparando para enviar dados ao servidor");
             setLoading(true);
-    
-            console.log("Dados sendo enviados:", {
-                name: name,
-                email: email,
-                password: password,
-            });
-    
+
             const response = await fetch(`${renderVaribale}/cadastro`, {
                 method: "POST",
                 headers: {
@@ -55,40 +33,29 @@ export default function Cadastro() {
                     password: password,
                 }),
             });
-    
-            console.log("Resposta do servidor recebida", response);
-    
+
             const result = await response.json();
-            console.log("Dados processados da resposta:", result);
-    
+
             if (response.status === 201) {
-                console.log("Cadastro realizado com sucesso");
                 alert("Cadastro realizado com sucesso");
+                await AsyncStorage.setItem("@user_name", name); // Armazena o nome do usuário
                 navigation.reset({
                     index: 0,
                     routes: [{ name: "BottonRoutes" }],
                 });
             } else {
-                console.log("Erro no cadastro, status não é 201:", result.error);
                 alert(`Erro no cadastro: ${result.error}`);
             }
         } catch (error) {
-            console.error("Erro ao cadastrar usuário:", error);
             alert(`Erro ao se conectar com o servidor. URL: ${renderVaribale}/cadastro   ERRO: ${error}`);
         } finally {
-            console.log("Finalizando execução da função registerUser");
             setLoading(false);
         }
     }
-    
+
     async function redirectCadastro() {
-        console.log("Redirecionando para a tela de login");
         navigation.navigate("Login");
     }
-    
-
-
-
 
     return (
         <View style={style.container}>
@@ -112,14 +79,6 @@ export default function Cadastro() {
                     IconRigth={MaterialIcons}
                     iconRightName="email"
                 />
-
-                <Input
-                    title="NÚMERO DE CELULAR"
-                    IconRigth={MaterialIcons}
-                    iconRightName="phone"
-                    keyboardType="phone-pad"
-                />
-
                 <Input
                     value={password}
                     onChangeText={(text) => setPassword(text)}
@@ -129,17 +88,6 @@ export default function Cadastro() {
                     secureTextEntry={showPassword}
                     onIconRigthPress={() => setShowPassword(!showPassword)}
                 />
-
-
-                {/* <Input
-                    value={confirmpassword}
-                    onChangeText={(text) => setconfirmPassword(text)}
-                    title="CONFIRME SUA SENHA"
-                    IconRigth={Octicons}
-                    iconRightName={showPassword ? "eye" : "eye-closed"}
-                    secureTextEntry={showPassword}
-                    onIconRigthPress={() => setShowPassword(!showPassword)}
-                /> */}
             </View>
 
             <View style={style.boxBotton}>
@@ -148,14 +96,14 @@ export default function Cadastro() {
                     loading={loading}
                     onPress={registerUser}
                 />
-
             </View>
 
-
-            <Text style={style.textBotton}>Já tem uma conta? <Text onPress={redirectCadastro} style={{ color: temas.cores.primaria }}>Entre agora!</Text> </Text>
+            <Text style={style.textBotton}>
+                Já tem uma conta?{" "}
+                <Text onPress={redirectCadastro} style={{ color: temas.cores.primaria }}>
+                    Entre agora!
+                </Text>
+            </Text>
         </View>
-
-    )
+    );
 }
-
-
