@@ -1,14 +1,14 @@
 import React from "react";
-import { Text, View, Image, TouchableOpacity, ActivityIndicator } from "react-native";
+import { Text, View, Image, Alert } from "react-native";
 import { style } from "./styles";
 import Logo from "../../assets/logo.png";
 import { MaterialIcons, Octicons } from "@expo/vector-icons";
 import { temas } from "../../global/temas";
 import { Input } from "../../components/Input";
 import { Button } from "../../components/button";
-import { renderVaribale } from "../../global/variables";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
+import { renderVaribale } from "../../global/variables";
 
 export default function Cadastro() {
     const navigation = useNavigation<NavigationProp<any>>();
@@ -18,42 +18,53 @@ export default function Cadastro() {
     const [showPassword, setShowPassword] = React.useState(true);
     const [loading, setLoading] = React.useState(false);
 
+    // Função de cadastro
     async function registerUser() {
         try {
             setLoading(true);
 
+            // Fazendo a requisição para o servidor
             const response = await fetch(`${renderVaribale}/cadastro`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    name: name,
-                    email: email,
-                    password: password,
+                    name: name.trim(),
+                    email: email.trim(),
+                    password: password.trim(),
                 }),
             });
 
             const result = await response.json();
 
             if (response.status === 201) {
-                alert("Cadastro realizado com sucesso");
-                await AsyncStorage.setItem("@user_name", name); // Armazena o nome do usuário
+                // Salvar o token do usuário no AsyncStorage
+                await AsyncStorage.setItem("userToken", result.token);
+
+                Alert.alert("Sucesso", "Cadastro realizado com sucesso!");
+                
+                // Redirecionar para a tela inicial após o cadastro
                 navigation.reset({
                     index: 0,
                     routes: [{ name: "BottonRoutes" }],
                 });
             } else {
-                alert(`Erro no cadastro: ${result.error}`);
+                // Exibir mensagem de erro retornada pelo servidor
+                Alert.alert("Erro no cadastro", result.error || "Erro desconhecido.");
             }
         } catch (error) {
-            alert(`Erro ao se conectar com o servidor. URL: ${renderVaribale}/cadastro   ERRO: ${error}`);
+            Alert.alert(
+                "Erro",
+                `Erro ao se conectar com o servidor. Tente novamente mais tarde.\n\nDetalhes: ${(error as Error).message}`
+            );
         } finally {
             setLoading(false);
         }
     }
 
-    async function redirectCadastro() {
+    // Função para redirecionar para a tela de login
+    function redirectLogin() {
         navigation.navigate("Login");
     }
 
@@ -91,16 +102,12 @@ export default function Cadastro() {
             </View>
 
             <View style={style.boxBotton}>
-                <Button
-                    text="CADASTRAR- SE"
-                    loading={loading}
-                    onPress={registerUser}
-                />
+                <Button text="CADASTRAR-SE" loading={loading} onPress={registerUser} />
             </View>
 
             <Text style={style.textBotton}>
                 Já tem uma conta?{" "}
-                <Text onPress={redirectCadastro} style={{ color: temas.cores.primaria }}>
+                <Text onPress={redirectLogin} style={{ color: temas.cores.primaria }}>
                     Entre agora!
                 </Text>
             </Text>

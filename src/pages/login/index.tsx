@@ -10,32 +10,25 @@ import { useNavigation, NavigationProp } from "@react-navigation/native";
 import { renderVaribale } from "../../global/variables";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-
 export default function Login() {
     const navigation = useNavigation<NavigationProp<any>>();
 
-    // Estado para armazenar email, senha, visibilidade da senha e status de carregamento
+    // Estados para armazenar os valores dos campos e o status de carregamento
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
     const [showPassword, setShowPassword] = React.useState(true);
     const [loading, setLoading] = React.useState(false);
 
-    // Função simulada para login
+    // Função de login
     async function getLogin() {
-        console.log("Início da função getLogin");
-    
         if (!email || !password) {
-            console.log("Erro: Campos obrigatórios não preenchidos");
             alert("Preencha todos os campos");
             return;
         }
-    
+
         try {
-            console.log("Preparando para enviar os dados ao servidor");
             setLoading(true);
-    
-            console.log("Dados sendo enviados:", { email, password });
-    
+
             const response = await fetch(`${renderVaribale}/login`, {
                 method: "POST",
                 headers: {
@@ -43,52 +36,59 @@ export default function Login() {
                 },
                 body: JSON.stringify({ email, password }),
             });
-    
-            console.log("Resposta do servidor recebida:", response);
-    
+
             const result = await response.json();
-            console.log("Dados processados da resposta:", result);
-    
+
             if (response.status === 200) {
-                console.log("Login bem-sucedido");
                 alert("Login bem-sucedido!");
-                
-                // Se usar armazenamento local descomentado, logue o que será salvo
-                console.log("Token sendo armazenado:", result.token);
+
+                // Mudança: Armazenamos o token após o login com sucesso
                 await AsyncStorage.setItem('userToken', result.token);
-    
+
+                // Agora, chamamos a função para obter os dados do usuário após o login
+                await getUserData(result.token);
+
                 navigation.reset({
                     index: 0,
                     routes: [{ name: "BottonRoutes" }],
                 });
             } else {
-                console.log("Erro no login, status diferente de 200:", result.error);
                 alert(`Erro no login: ${result.error}`);
             }
         } catch (error) {
-            console.error("Erro ao fazer login:", error);
             alert("Erro ao se conectar com o servidor.");
         } finally {
-            console.log("Finalizando execução da função getLogin");
             setLoading(false);
         }
     }
-    
-    // Redireciona para a tela de cadastro
-    async function redirectRegister() {
-        console.log("Início da função redirectRegister");
-    
+
+    // Função para buscar os dados do usuário (nome, por exemplo)
+    async function getUserData(token: any) {
         try {
-            console.log("Navegando para a tela de Cadastro");
-            navigation.navigate("Cadastro");
-            console.log("Navegação para Cadastro concluída");
+            const response = await fetch(`${renderVaribale}/me`, {
+                method: "GET",
+                headers: {
+                    "Authorization": `Bearer ${token}`, // Envia o token para autenticar a requisição
+                },
+            });
+
+            const user = await response.json();
+            if (response.status === 200) {
+                // Armazenando o nome do usuário no AsyncStorage
+                await AsyncStorage.setItem('userName', user.name); // Agora o nome é armazenado
+            } else {
+                alert("Erro ao buscar dados do usuário.");
+            }
         } catch (error) {
-            console.error("Erro ao redirecionar para a tela de Cadastro:", error);
+            console.error("Erro ao recuperar os dados do usuário:", error);
         }
-    
-        console.log("Finalizando a execução da função redirectRegister");
     }
-    
+
+    // Função para redirecionar para a tela de cadastro
+    async function redirectRegister() {
+        navigation.navigate("Cadastro");
+    }
+
     return (
         <View style={style.container}>
             <View style={style.boxTop}>
@@ -97,7 +97,6 @@ export default function Login() {
             </View>
 
             <View style={style.boxMid}>
-                {/* Input para o e-mail */}
                 <Input
                     value={email}
                     onChangeText={setEmail}
@@ -107,8 +106,6 @@ export default function Login() {
                     keyboardType="email-address"
                     autoCapitalize="none"
                 />
-
-                {/* Input para a senha com alternância de visibilidade */}
                 <Input
                     value={password}
                     onChangeText={setPassword}
@@ -121,11 +118,9 @@ export default function Login() {
             </View>
 
             <View style={style.boxBotton}>
-                {/* Botão para login */}
                 <Button text="ENTRAR" loading={loading} onPress={getLogin} />
             </View>
 
-            {/* Link para cadastro */}
             <Text style={style.textBotton}>
                 Ainda não tem uma conta?{" "}
                 <Text onPress={redirectRegister} style={{ color: temas.cores.primaria }}>
@@ -135,4 +130,3 @@ export default function Login() {
         </View>
     );
 }
-
