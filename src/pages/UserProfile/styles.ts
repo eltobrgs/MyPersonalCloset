@@ -52,4 +52,10 @@ export const style = StyleSheet.create({
         color: temas.cores.primaria,
         marginBottom: 10,
     },
+    buttonContainer: {
+        marginTop: 20,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    
 });

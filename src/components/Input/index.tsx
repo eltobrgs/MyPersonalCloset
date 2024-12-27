@@ -8,7 +8,7 @@ import {
     TextStyle,
     TextInputProps,
 } from "react-native";
-import { MaterialIcons, FontAwesome, Octicons,AntDesign } from "@expo/vector-icons";
+import { MaterialIcons, FontAwesome, Octicons,AntDesign, Feather } from "@expo/vector-icons";
 import { temas } from "../../global/temas";
 import { style } from "./styles";
 
@@ -18,7 +18,9 @@ type IconComponent =
     | React.ComponentType<React.ComponentProps<typeof MaterialIcons>>
     | React.ComponentType<React.ComponentProps<typeof FontAwesome>>
     | React.ComponentType<React.ComponentProps<typeof Octicons>>
-    | React.ComponentType<React.ComponentProps<typeof AntDesign>>;
+    | React.ComponentType<React.ComponentProps<typeof AntDesign>>
+    | React.ComponentType<React.ComponentProps<typeof Feather>>
+    ;
 
 type Props = TextInputProps & {
     IconLeft?: IconComponent;

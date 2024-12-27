@@ -44,11 +44,12 @@ export default function Cadastro() {
 
                 Alert.alert("Sucesso", "Cadastro realizado com sucesso!");
                 
-                // Redirecionar para a tela inicial após o cadastro
-                navigation.reset({
-                    index: 0,
-                    routes: [{ name: "BottonRoutes" }],
-                });
+                // Redirecionar para UserPreferences após o cadastro
+                // navigation.reset({
+                //     index: 0,
+                //     routes: [{ name: "UserPreferences" }],
+                // });
+                navigation.navigate("UserPreferences");
             } else {
                 // Exibir mensagem de erro retornada pelo servidor
                 Alert.alert("Erro no cadastro", result.error || "Erro desconhecido.");

@@ -24,6 +24,8 @@ export default function Ajustes() {
             try {
               console.log("Removendo token...");
               await AsyncStorage.removeItem("userToken");
+              await AsyncStorage.removeItem("userPreferences");
+
               console.log("Token removido com sucesso!");
 
               // Redireciona para a tela de login

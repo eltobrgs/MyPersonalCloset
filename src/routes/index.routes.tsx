@@ -4,6 +4,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import Login from "../pages/login";
 import BottonRoutes from "./bottom.routes";
 import Cadastro from "../pages/cadastro";
+import UserPreferences from "../pages/UserPreferences";
 import { ActivityIndicator, View } from "react-native";
 
 export default function Routes() {
@@ -46,6 +47,8 @@ export default function Routes() {
             <Stack.Screen name="BottonRoutes" component={BottonRoutes} />
             <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="Cadastro" component={Cadastro} />
+            <Stack.Screen name="UserPreferences" component={UserPreferences} />
+
         </Stack.Navigator>
     );
 }

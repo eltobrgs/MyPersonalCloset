@@ -4,6 +4,7 @@ import { StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage'; // Para obter o token armazenado
 import profilepic from '../../assets/profilepic.png';
 import { renderVaribale } from '../../global/variables';
+import { useNavigation, NavigationProp } from "@react-navigation/native";
 
 interface ProfileHeaderProps {
     name: string;
@@ -50,6 +51,12 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ subtitle, gender, locatio
         return <ActivityIndicator size="large" color="#80004C" />;
     }
 
+    function redirectProfile() {
+        const navigation = useNavigation<NavigationProp<any>>();
+        
+        navigation.navigate("UserProfile");
+    }
+
     return (
         <View style={style.headerContainer}>
             {/* Imagem e Nome */}
@@ -59,7 +66,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ subtitle, gender, locatio
                     <Text style={style.name}>{name}</Text>
                     <Text style={style.subtitle}>{subtitle}</Text>
                 </View>
-                <TouchableOpacity onPress={onPress}>
+                <TouchableOpacity onPress={redirectProfile}>
                     <Text style={style.arrow}>&gt;</Text>
                 </TouchableOpacity>
             </View>
