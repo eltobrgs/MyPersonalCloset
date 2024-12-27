@@ -94,7 +94,6 @@ export default function Login() {
             <View style={style.boxTop}>
                 <Image source={Logo} style={style.logo} resizeMode="contain" />
                 <Text style={style.text}>Bem vindo de volta! Faça login para continuar</Text>
-                <Text style={style.text}>MYPERSONALCLOSET</Text>
 
             </View>
 
