@@ -37,5 +37,18 @@ export const style = StyleSheet.create({
         fontSize: 20,
         color: '#888',
       },
+      deleteButton: {
+
+        marginLeft: 10,
+    
+      },
+    
+      deleteText: {
+    
+        fontSize: 24,
+    
+        color: "#666",
+    
+      },
     
 });

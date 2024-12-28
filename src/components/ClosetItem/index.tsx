@@ -7,9 +7,10 @@ interface ClosetItemProps {
   title: string;
   description: string;
   onPress: () => void;
+  deleteFunction: any;
 }
 
-const ClosetItem: React.FC<ClosetItemProps> = ({ image, title, description, onPress }) => {
+const ClosetItem: React.FC<ClosetItemProps> = ({ deleteFunction, image, title, description, onPress }) => {
   return (
     <TouchableOpacity style={style.card} onPress={onPress}>
       <View style={style.imageContainer}>
@@ -20,6 +21,10 @@ const ClosetItem: React.FC<ClosetItemProps> = ({ image, title, description, onPr
         <Text style={style.description}>{description}</Text>
       </View>
       <Text style={style.arrow}>&gt;</Text>
+      <TouchableOpacity style={style.deleteButton} onPress={deleteFunction}>
+        <Text style={style.deleteText}>🗑️</Text>
+      </TouchableOpacity>
+
     </TouchableOpacity>
   );
 };

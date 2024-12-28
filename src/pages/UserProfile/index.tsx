@@ -11,6 +11,7 @@ import { renderVaribale } from '../../global/variables'; // URL base do backend
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 
 const UserProfile = () => {
+    const [looks, setLooks] = useState<any[]>([]);
     const [userName, setUserName] = useState("Carregando...");
     const [preferences, setPreferences] = useState({
         fashionTarget: "N/A",
@@ -67,6 +68,22 @@ const UserProfile = () => {
                         gender: "N/A",
                     });
                 }
+
+                // Buscar looks do usuário
+                const looksResponse = await fetch(`${renderVaribale}/looks`, {
+                    method: 'GET',
+                    headers: {
+                        "Authorization": `Bearer ${token}`,
+                        "Content-Type": "application/json",
+                    },
+                });
+
+                if (looksResponse.ok) {
+                    const looksData = await looksResponse.json();
+                    setLooks(looksData);
+                } else {
+                    setLooks([]);
+                }
             } catch (error) {
                 console.error("Erro ao buscar dados do usuário:", error);
                 Alert.alert("Erro", "Não foi possível carregar as informações.");
@@ -101,7 +118,7 @@ const UserProfile = () => {
                 <Text style={style.subtitle}>{preferences.fashionTarget}</Text>
 
                 <View style={style.counterContainer}>
-                    <Text style={style.counterText}>0 LOOKS CADASTRADOS</Text>
+                    <Text style={style.counterText}>{looks.length.toString()} LOOKS CADASTRADOS</Text>
                 </View>
 
                 <View style={style.preferencesContainer}>
