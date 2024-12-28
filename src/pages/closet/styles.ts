@@ -64,4 +64,11 @@ export const style = StyleSheet.create({
     fontWeight: "bold",
     color: temas.cores.bgCard,
   },
+  emptyMessage: {
+    fontSize: 18,
+    color: temas.cores.secundaria,
+    textAlign: "center",
+    marginTop: 20,
+  },
+  
 });

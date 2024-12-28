@@ -3,6 +3,7 @@ import { StyleSheet, Dimensions } from "react-native";
 
 export const style = StyleSheet.create({
     card: {
+        marginTop: 10,
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: '#FCEFF6', // Cor de fundo semelhante ao rosa claro
