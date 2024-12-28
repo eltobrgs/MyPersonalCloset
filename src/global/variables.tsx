@@ -1,1 +1,1 @@
-export const renderVaribale = "https://backend-for-ugym-reactnative.onrender.com"
+export const renderVaribale = "https://backend-for-mypersonalcloset-reactnative.onrender.com"
