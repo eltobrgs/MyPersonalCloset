@@ -45,6 +45,30 @@ export default function Closet() {
     fetchLooks();
   }, []);
 
+  const deleteLook = async (lookId: number) => {
+    try {
+      const token = await AsyncStorage.getItem("userToken");
+
+      const response = await fetch(`${renderVaribale}/looks/${lookId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const result = await response.json();
+      if (response.status === 200) {
+        // Mostrar um alerta de sucesso e recarregar os looks
+        Alert.alert("Sucesso", "Look excluído com sucesso.");
+        setLooks(looks.filter(look => look.id !== lookId));  // Remover o look da lista local
+      } else {
+        Alert.alert("Erro", result.error || "Erro ao excluir look.");
+      }
+    } catch (error) {
+      Alert.alert("Erro", "Não foi possível conectar ao servidor.");
+    }
+  };
+
   return (
     <View style={styles.container}>
       <CustomHeader
@@ -62,10 +86,10 @@ export default function Closet() {
               key={index}
               title={look.title}
               description={look.description}
-                image={look.photo ? { uri: look.photo } : require("../../assets/default-image.jpg")}
-                onPress={() => Alert.alert("Item Pressed", look.title)}
-                deleteFunction={() => Alert.alert("Delete Pressed", look.title)}
-              />
+              image={look.photo ? { uri: look.photo } : require("../../assets/default-image.jpg")}
+              onPress={() => Alert.alert("Item Pressed", look.title)}
+              deleteFunction={() => deleteLook(look.id)}  // Chama a função deleteLook com o ID do look
+            />
           ))}
         </ScrollView>
       )}
