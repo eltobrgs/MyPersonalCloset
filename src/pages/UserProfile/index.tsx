@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { View, Text, Image, ScrollView, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import PreferenceItem from '../../components/PreferenceItem';
@@ -9,9 +9,10 @@ import logo from '../../assets/logo.png';
 import { style } from './styles';
 import { renderVaribale } from '../../global/variables'; // URL base do backend
 import { useNavigation, NavigationProp } from '@react-navigation/native';
+import { authContextList } from '../../context/authContext_list';
 
 const UserProfile = () => {
-    const [looks, setLooks] = useState<any[]>([]);
+    const { looks, setLooks } = useContext(authContextList); // Usando o contexto para acessar os looks
     const [userName, setUserName] = useState("Carregando...");
     const [preferences, setPreferences] = useState({
         fashionTarget: "N/A",
@@ -99,7 +100,7 @@ const UserProfile = () => {
         };
 
         fetchUserData();
-    }, []);
+    }, [setLooks]); // Adiciona setLooks como dependência para recarregar quando os looks mudarem
 
     const handleEditPreferences = () => {
         navigation.navigate('UserPreferences');

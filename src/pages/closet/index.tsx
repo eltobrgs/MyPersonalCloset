@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import {
   View,
   ScrollView,
@@ -12,9 +12,10 @@ import CustomHeader from "../../components/Header";
 import ClosetItem from "../../components/ClosetItem";
 import { renderVaribale } from "../../global/variables";
 import logo from "../../assets/logo.png";
+import { AuthProvider_list, authContextList } from "../../context/authContext_list";
 
 export default function Closet() {
-  const [looks, setLooks] = useState<any[]>([]);
+  const { looks, setLooks } = useContext(authContextList); // Usando o contexto para acessar os looks
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -31,7 +32,7 @@ export default function Closet() {
 
         const result = await response.json();
         if (response.status === 200) {
-          setLooks(result);
+          setLooks(result);  // Atualiza os looks através do contexto
         } else {
           Alert.alert("Erro", result.error || "Erro ao listar looks.");
         }
@@ -43,7 +44,7 @@ export default function Closet() {
     };
 
     fetchLooks();
-  }, []);
+  }, [setLooks]);
 
   const deleteLook = async (lookId: number) => {
     try {
@@ -58,9 +59,8 @@ export default function Closet() {
 
       const result = await response.json();
       if (response.status === 200) {
-        // Mostrar um alerta de sucesso e recarregar os looks
         Alert.alert("Sucesso", "Look excluído com sucesso.");
-        setLooks(looks.filter(look => look.id !== lookId));  // Remover o look da lista local
+        setLooks(looks.filter((look: { id: number; }) => look.id !== lookId));  // Atualiza a lista de looks
       } else {
         Alert.alert("Erro", result.error || "Erro ao excluir look.");
       }
@@ -81,14 +81,14 @@ export default function Closet() {
         <Text style={styles.loadingText}>Carregando...</Text>
       ) : (
         <ScrollView style={styles.scrollContainer}>
-          {looks.map((look, index) => (
+          {looks.map((look: { title: string | undefined; description: string; photo: any; id: number; }, index: React.Key | null | undefined) => (
             <ClosetItem
               key={index}
-              title={look.title}
+              title={look.title || "Untitled"}
               description={look.description}
               image={look.photo ? { uri: look.photo } : require("../../assets/default-image.jpg")}
               onPress={() => Alert.alert("Item Pressed", look.title)}
-              deleteFunction={() => deleteLook(look.id)}  // Chama a função deleteLook com o ID do look
+              deleteFunction={() => deleteLook(look.id)}
             />
           ))}
         </ScrollView>
@@ -100,6 +100,7 @@ export default function Closet() {
     </View>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {
