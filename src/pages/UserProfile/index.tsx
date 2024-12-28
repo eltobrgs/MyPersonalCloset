@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, ScrollView } from 'react-native';
+import { View, Text, Image, ScrollView, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import PreferenceItem from '../../components/PreferenceItem';
-import CustomHeader from '../../components/Header'; 
-import { Button } from '../../components/button'; // Import do componente de botão
+import CustomHeader from '../../components/Header';
+import { Button } from '../../components/button'; 
 import profilepic from '../../assets/profilepic.png';
 import logo from '../../assets/logo.png';
 import { style } from './styles';
-import { useAuth } from '../../context/authContext_list';
 import { renderVaribale } from '../../global/variables'; // URL base do backend
-import { useNavigation, NavigationProp } from '@react-navigation/native'; // Navegação
+import { useNavigation, NavigationProp } from '@react-navigation/native';
 
 const UserProfile = () => {
     const [userName, setUserName] = useState("Carregando...");
@@ -20,12 +19,10 @@ const UserProfile = () => {
         theme: "N/A",
         gender: "N/A",
     });
-    const { looks } = useAuth();
     const navigation = useNavigation<NavigationProp<any>>();
 
-    // Buscar nome do usuário
     useEffect(() => {
-        const fetchUserName = async () => {
+        const fetchUserData = async () => {
             try {
                 const token = await AsyncStorage.getItem('userToken');
                 if (!token) {
@@ -33,6 +30,7 @@ const UserProfile = () => {
                     return;
                 }
 
+                // Buscar nome do usuário
                 const response = await fetch(`${renderVaribale}/me`, {
                     method: 'GET',
                     headers: {
@@ -47,31 +45,45 @@ const UserProfile = () => {
                 } else {
                     setUserName("Usuário");
                 }
-            } catch (error) {
-                setUserName("Usuário");
-            }
-        };
 
-        fetchUserName();
-    }, []);
+                // Buscar preferências do usuário
+                const preferencesResponse = await fetch(`${renderVaribale}/preferences`, {
+                    method: 'GET',
+                    headers: {
+                        "Authorization": `Bearer ${token}`,
+                        "Content-Type": "application/json",
+                    },
+                });
 
-    // Buscar preferências do AsyncStorage
-    useEffect(() => {
-        const fetchPreferences = async () => {
-            try {
-                const savedPreferences = await AsyncStorage.getItem('userPreferences');
-                if (savedPreferences) {
-                    setPreferences(JSON.parse(savedPreferences));
+                if (preferencesResponse.ok) {
+                    const preferencesData = await preferencesResponse.json();
+                    setPreferences(preferencesData);
+                } else {
+                    setPreferences({
+                        fashionTarget: "N/A",
+                        birthDate: "N/A",
+                        address: "N/A",
+                        theme: "N/A",
+                        gender: "N/A",
+                    });
                 }
             } catch (error) {
-                console.error("Erro ao buscar preferências:", error);
+                console.error("Erro ao buscar dados do usuário:", error);
+                Alert.alert("Erro", "Não foi possível carregar as informações.");
+                setUserName("Usuário");
+                setPreferences({
+                    fashionTarget: "N/A",
+                    birthDate: "N/A",
+                    address: "N/A",
+                    theme: "N/A",
+                    gender: "N/A",
+                });
             }
         };
 
-        fetchPreferences();
+        fetchUserData();
     }, []);
 
-    // Navegar para a tela de edição de preferências
     const handleEditPreferences = () => {
         navigation.navigate('UserPreferences');
     };
@@ -89,7 +101,7 @@ const UserProfile = () => {
                 <Text style={style.subtitle}>{preferences.fashionTarget}</Text>
 
                 <View style={style.counterContainer}>
-                    <Text style={style.counterText}>{looks.length.toString()} LOOKS CADASTRADOS</Text>
+                    <Text style={style.counterText}>0 LOOKS CADASTRADOS</Text>
                 </View>
 
                 <View style={style.preferencesContainer}>

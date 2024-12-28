@@ -3,11 +3,12 @@ import { Text, View, Alert, ScrollView } from "react-native";
 import { MaterialIcons, Feather } from "@expo/vector-icons";
 import { Input } from "../../components/Input";
 import { Button } from "../../components/button";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { style } from "./styles";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 import { Picker } from "@react-native-picker/picker";
 import Ajustes from "../ajustes";
+import { renderVaribale } from "../../global/variables"; // URL base do backend
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function UserPreferences() {
     const navigation = useNavigation<NavigationProp<any>>();
@@ -31,12 +32,28 @@ export default function UserPreferences() {
                 gender,
             };
 
-            await AsyncStorage.setItem("userPreferences", JSON.stringify(preferences));
-            Alert.alert("Sucesso", "Preferências salvas com sucesso!");
-            navigation.reset({
-                index: 0,
-                routes: [{ name: "BottonRoutes" }],
+            // Puxando o token do usuário
+            const token = await AsyncStorage.getItem('userToken');
+
+            // Enviando as preferências para o backend
+            const response = await fetch(`${renderVaribale}/preferences`, {
+                method: 'POST',
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(preferences),
             });
+
+            if (response.ok) {
+                Alert.alert("Sucesso", "Preferências salvas com sucesso!");
+                navigation.reset({
+                    index: 0,
+                    routes: [{ name: "BottonRoutes" }],
+                });
+            } else {
+                throw new Error("Não foi possível salvar as preferências.");
+            }
         } catch (error) {
             Alert.alert("Erro", "Não foi possível salvar as preferências. Tente novamente.");
         } finally {
