@@ -18,7 +18,6 @@ const UserProfile = () => {
         fashionTarget: "N/A",
         birthDate: "N/A",
         address: "N/A",
-        theme: "N/A",
         gender: "N/A",
     });
     const navigation = useNavigation<NavigationProp<any>>();
@@ -65,7 +64,6 @@ const UserProfile = () => {
                         fashionTarget: "N/A",
                         birthDate: "N/A",
                         address: "N/A",
-                        theme: "N/A",
                         gender: "N/A",
                     });
                 }
@@ -93,7 +91,6 @@ const UserProfile = () => {
                     fashionTarget: "N/A",
                     birthDate: "N/A",
                     address: "N/A",
-                    theme: "N/A",
                     gender: "N/A",
                 });
             }

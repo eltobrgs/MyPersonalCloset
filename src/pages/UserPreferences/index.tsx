@@ -16,7 +16,6 @@ export default function UserPreferences() {
     const [fashionTarget, setFashionTarget] = React.useState("Moda: N/A ");
     const [birthDate, setBirthDate] = React.useState("");
     const [address, setAddress] = React.useState("");
-    const [theme, setTheme] = React.useState("");
     const [gender, setGender] = React.useState("");
     const [loading, setLoading] = React.useState(false);
 
@@ -28,7 +27,6 @@ export default function UserPreferences() {
                 fashionTarget,
                 birthDate,
                 address,
-                theme,
                 gender,
             };
 
