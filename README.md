@@ -51,6 +51,7 @@
 ```bash
 # Clone o repositório
 git clone https://github.com/eltobrgs/MyPersonalCloset.git
+
 # Instale as dependências
 cd MyPersonalCloset
 bun install
