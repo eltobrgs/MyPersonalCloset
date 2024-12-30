@@ -52,7 +52,7 @@
 # Clone o repositório
 git clone https://github.com/eltobrgs/MyPersonalCloset.git
 # Instale as dependências
-cd meu-personal-closet
+cd MyPersonalCloset
 bun install
 
 # Rode o aplicativo
