@@ -62,7 +62,6 @@ bun start
 ---
 
 ## 5. 🎨 Design do Aplicativo
-- Descreva o layout das telas com wireframes ou capturas de tela.
 - **Telas principais**:
   - ***Tela de login/cadastro***
     - Acesso ao sistema por meio de login ou criação de conta. Inclui campos de e-mail e senha e suporte a google.
