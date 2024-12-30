@@ -1,39 +1,3 @@
-# MyPersonalCloset
-
-[![React Native](https://img.shields.io/badge/React%20Native-0.72.3-blue)](https://reactnative.dev/)
-[![Expo](https://img.shields.io/badge/Expo-49.0.0-000000)](https://expo.dev/)
-[![License](https://img.shields.io/badge/license-MIT-green)](./LICENSE)
-
-**MyPersonalCloset** é um aplicativo móvel para ajudar os usuários a gerenciar seu guarda-roupa pessoal, adicionar looks e visualizar dicas de moda. Ele foi desenvolvido utilizando **React Native** e **Expo**, garantindo uma experiência multiplataforma e fácil de manter.
-
----
-
-## 🚀 Funcionalidades
-
-- 👗 **Gerenciamento de Looks**: Adicione, edite e visualize seus looks.
-- 📸 **Captura de Imagens**: Tire fotos das suas roupas e adicione ao seu guarda-roupa.
-- 🧑‍💻 **Perfil do Usuário**: Edite informações pessoais como nome, foto de perfil e preferências de moda.
-- 🔔 **Notificações**: Receba lembretes para usar determinados looks ou para eventos especiais.
-
----
-
-## 🛠️ Tecnologias Utilizadas
-
-- **[React Native](https://reactnative.dev/)**: Framework para desenvolvimento de apps móveis.
-- **[Expo](https://expo.dev/)**: Plataforma para construir, compilar e testar aplicativos React Native.
-- **[React Navigation](https://reactnavigation.org/)**: Navegação entre telas.
-- **[Expo CLI](https://docs.expo.dev/workflow/expo-cli/)**: Ferramenta para gerenciamento do projeto.
-- **[Expo Go](https://expo.dev/client)**: Teste do app diretamente no dispositivo.
-
-
-
-
-
-
-
-
-
-
 # ✨ **Documentação do Projeto: Meu Personal Closet** ✨
 
 ## 1. 🔍 Introdução
@@ -100,29 +64,41 @@ bun start
 ## 5. 🎨 Design do Aplicativo
 - Descreva o layout das telas com wireframes ou capturas de tela.
 - **Telas principais**:
-  - Tela de login/cadastro.
-  - Tela de catálogo de roupas.
-  - Tela de combinação sugerida.
-  - Tela de configurações.
+  - ***Tela de login/cadastro***
+    - Acesso ao sistema por meio de login ou criação de conta. Inclui campos de e-mail e senha e suporte a google.
+  - ***Tela de início***
+    - Página principal com atalhos para funcionalidades e sugestões personalizadas, oferecendo uma navegação rápida e intuitiva.
+  - ***Tela de roupas adicionadas***
+    - Lista de roupas salvas pelo usuário.
+  - ***Tela de Perfil***
+    - Exibe informações pessoais do usuário, como foto e nome, além de opções para editar dados e visualizar contador de looks adicionados.
+  - ***Tela de configurações***
+    - Ajustes do aplicativo, incluindo idioma, privacidade, etc.
 
 ---
 
-## 8. 🎨 Estilo e Temas
-- **Guia de estilo**: Paleta de cores, fontes, e regras de espaçamento.
-- **Exemplo de um tema padrão**:
+## 6. 🎨 Estilo
+- **Tema padrão**:
   ```javascript
-  const theme = {
-    colors: {
-      primary: '#6200ee',
-      background: '#f6f6f6',
-      text: '#000000',
-    },
-  };
+  export const temas = {
+    cores: {
+        primaria: '#4B223F', // tom mais escuro do roxo
+        secundaria: '#6A3354', // segundo tom mais escuro
+        lightgray: '#9B637D', // tom intermediário mais claro
+        gray: '#B47B95', // tom mais médio
+        darkgray: '#D49DB0', // tom mais claro
+        insideGray: '#EEC4CF', // tom mais suave da paleta
+        bgScreen: '#F5F0F5', // tom quase branco
+        bgCard: '#FFFFFF', // branco
+    }
+};
+
   ```
 
 ---
 
 
-## 12. 🔗 Referências
-- Links úteis e documentação de bibliotecas usadas.
+## 7. 🔗 Referências
+- https://reactnative.dev/docs/
+- https://docs.expo.dev/
 
