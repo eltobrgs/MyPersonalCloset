@@ -91,9 +91,6 @@ bun start
         bgScreen: '#F5F0F5', // tom quase branco
         bgCard: '#FFFFFF', // branco
     }
-};
-
-  ```
 
 ---
 
